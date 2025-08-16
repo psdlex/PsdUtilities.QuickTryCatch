@@ -72,7 +72,7 @@ if (result.IsSuccess)
 	// do something with the result
 }
 ```
-Firstly, it tries to execute the `ReadFileAsync`, if it fails, it verifies the exception types, if the type is ignored, if its `IOException`, it handles it, anything else - rethrows it outside the boundaries of the TryCatch utility. You will need a global handler to catch it, or a try/catch body around it (but doesnt it defeat the entire purpose of the utility?!). Anyways, elsewise it moves on to the next attempt, prematurely waiting for exactly 1 second as we asked it to.
+Firstly, it tries to execute the `ReadFileAsync`, if it fails, it verifies the exception type, if the type is ignored - moves on, if its `IOException`, it handles it, anything else - rethrows it outside of the boundaries of the `TryCatch` utility. You will need a global handler to catch it, or a try/catch body around it (but doesnt it defeat the entire purpose of the utility?!). Anyways, elsewise it moves on to the next attempt, prematurely waiting for exactly 1 second as we asked it to.
 
 Finally, when it succeeds, according to our `continuation options`, we can see the execution order of the `.ContinueWith` functions, it will firstly display the file text, then the "success" message. If you dont provide the `ExecutionOrder`, it will be set to `sequential`, which by the way you cannot set manually, because the sequence is calculated using `Factory` that keeps the state of the orders, **but you can set your own order**, using `ExecutionOrder.FromValue()`, where you provide the order, **which is ascending**, lower values - get executed first.
 
