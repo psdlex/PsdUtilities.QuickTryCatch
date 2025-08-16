@@ -20,7 +20,7 @@ public sealed class CatchAllTests
         TryCatch.Execute(action)
             .CatchAll(ex => caughtException = ex)
             .Finalize();
-
+        
         caughtException?.GetType().Should().Be(exception.GetType());
     }
 

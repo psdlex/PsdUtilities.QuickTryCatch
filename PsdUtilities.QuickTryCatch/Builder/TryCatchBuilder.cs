@@ -5,7 +5,7 @@ using PsdUtilities.QuickTryCatch.Builder.Options.ContinueWith;
 
 namespace PsdUtilities.QuickTryCatch.Builder;
 
-public partial class TryCatchBuilder<TResult> : ITryCatchBuilder<TResult>
+public partial class TryCatchBuilder<TResult>
 {
     private readonly ContinueOptionFactory _continueOptionFactory;
 
