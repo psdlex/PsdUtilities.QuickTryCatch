@@ -27,12 +27,14 @@ TryCatch
 ```
 In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;
 
+
 You could also use lambda expression for short code
 ```csharp
 TryCatch
 	.Execute(() => { Console.WriteLine("Hiii!!"); })
 	.Finalize();
 ```
+
 
 When it comes to async methods, **it must be Task or Task<T>**, `async void` will not be suitable.
 You are not required to use `FinalizeAsync()` for async methods, but realize that `Finalize()` literally invoked `FinalizeAsync()`, then gets it awaiter and result.
@@ -47,6 +49,7 @@ await TryCatch
 	.Catch<NotImplementedException>(ex => Console.WriteLine("This method is not implemented."))
 	.FinalizeAsync();
 ```
+
 
 Now lets do something a little more complex, real-life example
 ```csharp
