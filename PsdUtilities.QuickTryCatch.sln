@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsdUtilities.QuickTryCatch", "PsdUtilities.QuickTryCatch\PsdUtilities.QuickTryCatch.csproj", "{DAC547F1-52A3-4073-8FB9-9EB9B3B6715B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PsdUtilities.QuickTryCatch.Tests", "PsdUtilities.QuickTryCatch.Tests\PsdUtilities.QuickTryCatch.Tests.csproj", "{F82BED33-B6F2-419E-9D05-C0BAC254C7D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAC547F1-52A3-4073-8FB9-9EB9B3B6715B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC547F1-52A3-4073-8FB9-9EB9B3B6715B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC547F1-52A3-4073-8FB9-9EB9B3B6715B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC547F1-52A3-4073-8FB9-9EB9B3B6715B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F82BED33-B6F2-419E-9D05-C0BAC254C7D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F82BED33-B6F2-419E-9D05-C0BAC254C7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F82BED33-B6F2-419E-9D05-C0BAC254C7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F82BED33-B6F2-419E-9D05-C0BAC254C7D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F40F5B13-45DA-4606-A3F4-88DC50D8BF98}
+	EndGlobalSection
+EndGlobal
