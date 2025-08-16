@@ -11,11 +11,11 @@ A small, single-class utility library for a quick execution of tasks that requir
 - An ability to retry to successfully execute the task if it failed (i.e. `.WithRetries(retries: int, delay: TimeSpan)`), though delay is not recommended to use if your execution is not asynchronous, as it could block the main thread. In that case just use `.WithRetries(retries: int)`.
 - Continuation with the result **with async overload** if the tasks **succeeds**, i.e. `.ContinueWith(result => ...)` where result is a generic parameter, if you dont want a result, but a plain void execution, it will be `object?` by default, you can just discard it this was: `.ContinueWith(_ => <some actions unrelated to the result value>... )`, 
 - Independent execution result that contains a `nullable result value`, `bool Success`, `nullable exception` and `amount of retries for that execution`
-
+- 
 ## How to use
 
 An example of referencing a method
-```
+```csharp
 void FailableMethod()
 {
 	// code that might throw an exception
@@ -28,7 +28,7 @@ TryCatch
 In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;
 
 You could also use lambda expression for short code
-```
+```csharp
 TryCatch
 	.Execute(() => { Console.WriteLine("Hiii!!"); })
 	.Finalize();
@@ -36,7 +36,7 @@ TryCatch
 
 When it comes to async methods, **it must be Task or Task<T>**, `async void` will not be suitable.
 You are not required to use `FinalizeAsync()` for async methods, but realize that `Finalize()` literally invoked `FinalizeAsync()`, then gets it awaiter and result.
-```
+```csharp
 Task AsyncFailableMethod()
 {
 	throw new NotImplementedException(); // lets actually throw an exception
@@ -49,7 +49,7 @@ await TryCatch
 ```
 
 Now lets do something a little more complex, real-life example
-```
+```csharp
 async Task<string> ReadFileAsync()
 {
     var file = "myFile.txt";
