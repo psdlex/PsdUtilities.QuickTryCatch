@@ -4,6 +4,33 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>PsdUtilities.QuickTryCatch</Title>
+		<Authors>psdlex</Authors>
+		<Description>A comprehensive C# utility that provides quick and convenient
+way to execute your tasks in a Try/Catch manner with an oppurtunity
+to handle any exceptions and output results.</Description>
+		<PackageProjectUrl>https://github.com/psdlex/PsdUtilities.QuickTryCatch</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/psdlex/PsdUtilities.QuickTryCatch</RepositoryUrl>
+		<PackageTags>try;catch;try-catch;utility;utilities;util;utils;netstandard2.0;netstandard;net;csharp;c#</PackageTags>
+		<PackageOutputPath>./nuget</PackageOutputPath>
+		<NeutralLanguage>en-001</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="nuget\**" />
+	  <EmbeddedResource Remove="nuget\**" />
+	  <None Remove="nuget\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
