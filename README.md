@@ -25,7 +25,7 @@ TryCatch
 	.Execute(FailableMethod)
 	.Finalize(); // required in order to "build" according to the builder specifications and run the action task.
 ```
-In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;<br><br>
+In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;<br>
 
 You could also use a lambda expression for a short action.
 ```csharp
@@ -33,7 +33,7 @@ TryCatch
 	.Execute(() => { Console.WriteLine("Hiii!!"); })
 	.Finalize();
 ```
-<br><br>
+<br>
 
 When it comes to async methods, **it must be Task or Task<T>**, `async void` won't be suitable.
 ```csharp
@@ -47,7 +47,7 @@ await TryCatch
 	.Catch<NotImplementedException>(ex => Console.WriteLine("This method is not implemented."))
 	.FinalizeAsync();
 ```
-<br><br>
+<br>
 
 Now lets do something a little more complex!  
 ```csharp
