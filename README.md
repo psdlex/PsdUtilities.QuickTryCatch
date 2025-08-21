@@ -1,20 +1,20 @@
 # PsdUtilities.QuickTryCatch
 
-A small, single-class utility library for a quick execution of tasks that require a try-catch block. Made with convenient and simple handle of any exceptions.
+#### A small, single-class utility library for a quick execution of tasks that require a try-catch block. Made with convenient and simple handle of any exception.
 
 ## Features
-- Sync/Async operation execution
-- Handle of all, or specific exception using convenient builder method (e.g. `.Catch<MyException>(ex => ...)` or `.CatchAll(ex => ...)`).
-- Conditional exception handle (e.g. `CatchWhen<MyException>(ex => ex.StatusCode == 400, ex => ...)`, same thing works for `.CatchAllWhen` for catching every exception), async versions of this methods also exist.
-- Ignoring particular exception while being able to handle other ones (e.g. `.Ignore<IOException>()`).
+- Sync/Async operation execution.
+- Handle of all or specific exceptions using a convenient builder method (e.g. `.Catch<MyException>(ex => ...)` or `.CatchAll(ex => ...)`).
+- Conditional exception handle (e.g. `CatchWhen<MyException>(ex => ex.StatusCode == 400, ex => ...)`. Same thing applies for `.CatchAllWhen()` for catching every exception), async versions of these methods are also available.
+- Disregard of particular exceptions (e.g. `.Ignore<IOException>()`).
 - Unhandled exception behavior - either ignore them (i.e. `.IgnoreUnhandled()` *default behavior*), or rethrow them (i.e. `.RethrowUnhandled()`, **keeps the stack trace**).
-- An ability to retry to successfully execute the task if it failed (i.e. `.WithRetries(retries: int, delay: TimeSpan)`), though delay is not recommended to use if your execution is not asynchronous, as it could block the main thread. In that case just use `.WithRetries(retries: int)`.
-- Continuation with the result **with async overload** if the tasks **succeeds**, i.e. `.ContinueWith(result => ...)` where result is a generic parameter, if you dont want a result, but a plain void execution, it will be `object?` by default, you can just discard it this was: `.ContinueWith(_ => <some actions unrelated to the result value>... )`, 
-- Independent execution result that contains a `nullable result value`, `bool Success`, `nullable exception` and `amount of retries for that execution`
-- 
+- Task execution repeat attempt in a case of a failure (i.e. `.WithRetries(retries: int, delay: TimeSpan)`), though delay is unrecommended for synchonous tasks, as it could block the main thread. Prefer just `.WithRetries(retries: int)`.
+- Continuation with the result, **including async overload**, if the tasks **succeeds**, i.e. `.ContinueWith(result => ...)`, where the result is a generic parameter. If you dont want any result, but a plain void execution, its going to be `object?` by default, you can just discard it this like that: `.ContinueWith(_ => <some actions unrelated to the result value>... )`.
+- Independent execution result that contains a `nullable result value`, `bool Success`, `nullable exception` and `amount of retries for that execution to succeed`.
+
 ## How to use
 
-An example of referencing a method
+An example of referencing a method:
 ```csharp
 void FailableMethod()
 {
@@ -23,21 +23,19 @@ void FailableMethod()
 
 TryCatch
 	.Execute(FailableMethod)
-	.Finalize(); // required in order to "build" according to the builder specifications and run the action task
+	.Finalize(); // required in order to "build" according to the builder specifications and run the action task.
 ```
-In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;
+In this example, the `FailableMethod` try to execute, if it fails, **no exceptions will be thrown**, the code will continue its work;<br><br>
 
-
-You could also use lambda expression for short code
+You could also use a lambda expression for a short action.
 ```csharp
 TryCatch
 	.Execute(() => { Console.WriteLine("Hiii!!"); })
 	.Finalize();
 ```
+<br><br>
 
-
-When it comes to async methods, **it must be Task or Task<T>**, `async void` will not be suitable.
-You are not required to use `FinalizeAsync()` for async methods, but realize that `Finalize()` literally invoked `FinalizeAsync()`, then gets it awaiter and result.
+When it comes to async methods, **it must be Task or Task<T>**, `async void` won't be suitable.
 ```csharp
 Task AsyncFailableMethod()
 {
@@ -49,9 +47,9 @@ await TryCatch
 	.Catch<NotImplementedException>(ex => Console.WriteLine("This method is not implemented."))
 	.FinalizeAsync();
 ```
+<br><br>
 
-
-Now lets do something a little more complex, real-life example
+Now lets do something a little more complex!  
 ```csharp
 async Task<string> ReadFileAsync()
 {
@@ -75,9 +73,9 @@ if (result.IsSuccess)
 	// do something with the result
 }
 ```
-Firstly, it tries to execute the `ReadFileAsync`, if it fails, it verifies the exception type, if the type is ignored - moves on, if its `IOException`, it handles it, anything else - rethrows it outside of the boundaries of the `TryCatch` utility. You will need a global handler to catch it, or a try/catch body around it (but doesnt it defeat the entire purpose of the utility?!). Anyways, elsewise it moves on to the next attempt, prematurely waiting for exactly 1 second as we asked it to.
+As a first step, it tries to execute the `ReadFileAsync`, if it fails - it verifies the exception type. If the type is ignored - moves on, if its `IOException`, it handles it, anything else - rethrows it outside the `TryCatch` utility. You will need a global handler to catch it, or a try/catch body around it (but doesnt it defeat the entire purpose of the utility?!). Anyways, elsewise it moves on to the next attempt, prematurely waiting for exactly 1 second as we asked it to.
 
-Finally, when it succeeds, according to our `continuation options`, we can see the execution order of the `.ContinueWith` functions, it will firstly display the file text, then the "success" message. If you dont provide the `ExecutionOrder`, it will be set to `sequential`, which by the way you cannot set manually, because the sequence is calculated using `Factory` that keeps the state of the orders, **but you can set your own order**, using `ExecutionOrder.FromValue()`, where you provide the order, **which is ascending**, lower values - get executed first.
+Finally, when it succeeds, according to our `continuation options`, we can understand the execution order of the `.ContinueWith` functions. Firstly display the file text, then the "success" message. If you dont provide the `ExecutionOrder`, it will be set to `sequential`, which by the way you cannot set manually, because the sequence is calculated using `Factory` that keeps track of the state of the orders, **but you can set your own order**, using `ExecutionOrder.FromValue()`, where you provide the order, **which is ascending**, lower values - gets executed first.
 
 `ExecutionOrder.First` and `ExecutionOrder.Last` are nothing more than just `ExecutionOrder.FromValue(int.MinValue)` and `ExecutionOrder.FromValue(int.MaxValue)`.
 
